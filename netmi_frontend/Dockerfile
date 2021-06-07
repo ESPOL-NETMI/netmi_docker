@@ -1,45 +1,42 @@
-# =============================================================================
-#
-# NETMI FRONTEND
-# 
-# =============================================================================
-FROM node:14-alpine
+######################################################################################
+##### Stage 1, "build-stage", based on Node.js, to build and compile the frontend  ###
+######################################################################################
 
-LABEL student1="alealcor@espol.edu.ec"
-LABEL student2="macaagui@espol.edu.ec"
+FROM node:14-alpine as build-stage
 
-# -----------------------------------------------------------------------------
-# Additional repositories
-# -----------------------------------------------------------------------------
-RUN apk add --no-cache bash && \
-    apk add --no-cache --virtual .build-deps-full \
-    curl ethtool tar unzip vim wget gcc
+LABEL student1="macaagui@espol.edu.ec"
+LABEL student2="alealcor@espol.edu.ec"
 
-# -----------------------------------------------------------------------------
-# Inmediate actions
-# -----------------------------------------------------------------------------
-WORKDIR /usr/src/app
+WORKDIR /home/node/app
 
+# Copy the dependencies and install 
 
-# -----------------------------------------------------------------------------
-# Copy node files and install dependences
-# -----------------------------------------------------------------------------
-
-COPY ["package.json", "package-lock.json*", "/usr/src/app/"]
+COPY package*.json /home/node/app
 
 RUN npm install
 
-# -----------------------------------------------------------------------------
-# Copy the remaining files taking advantage of the cache
-# -----------------------------------------------------------------------------
-COPY [".", "/usr/src/app/"]
+# Copy the entire project and build it
 
-# -----------------------------------------------------------------------------
-# Exposed ports
-# -----------------------------------------------------------------------------
-EXPOSE 3001
+COPY . /home/node/app
 
-# -----------------------------------------------------------------------------
-# Command to run deployed files
-# -----------------------------------------------------------------------------
-CMD ["npm", "start"]
+RUN npm run build
+
+######################################################################################
+##### Stage 2, based on Nginx, to have only the compiled app, ready for production ###
+######################################################################################
+
+FROM nginx:1.21.0-alpine
+
+# Install the bash to use instead 
+
+RUN apk add --no-cache bash
+
+# Copy the compiled app and the conf to the new stage
+
+COPY --from=build-stage /home/node/app/dist /usr/share/nginx/html
+
+COPY --from=build-stage /home/node/app/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Start the app
+
+CMD ["nginx", "-g", "daemon off;"]
