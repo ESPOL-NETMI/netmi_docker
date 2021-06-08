@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  netmi_backend:
+    container_name: netmi_backend
+    build:
+      context: ../netmi_backend/
+      dockerfile: ../netmi_docker/netmi_backend/Dockerfile
+    restart: unless-stopped
+    networks:
+      - netmi_net
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./.env
+
+  netmi_frontend:
+    container_name: netmi_frontend
+    build:
+      context: ../netmi_frontend/
+      dockerfile: ../netmi_docker/netmi_frontend/Dockerfile
+    restart: always
+    networks:
+      - netmi_net
+    ports:
+      - "4200:80"
+    env_file:
+      - ./.env
+    depends_on:
+      - netmi_backend
+
+networks:
+  netmi_net:
+    driver: bridge

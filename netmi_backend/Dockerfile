@@ -1,45 +1,30 @@
-# =============================================================================
-#
-# NETMI BACKEND
-# 
-# =============================================================================
+####################################
+##### Backend for the migration  ###
+####################################
+
 FROM python:3.9.5-alpine3.13
 
-LABEL student1="alealcor@espol.edu.ec"
-LABEL student2="macaagui@espol.edu.ec"
+LABEL student1="macaagui@espol.edu.ec"
+LABEL student2="alealcor@espol.edu.ec"
 
-# -----------------------------------------------------------------------------
-# Additional repositories
-# -----------------------------------------------------------------------------
-RUN apk add --no-cache bash && \
-    apk add --no-cache --virtual .build-deps-full \
-    curl ethtool tar unzip vim wget gcc
+# Install the bash to use instead 
 
-# -----------------------------------------------------------------------------
-# Inmediate actions
-# -----------------------------------------------------------------------------
-WORKDIR /usr/src/app
+RUN apk add --no-cache bash
 
+WORKDIR /app
 
-# -----------------------------------------------------------------------------
-# Copy node files and install dependences
-# -----------------------------------------------------------------------------
+# Copy the dependencies and install 
 
-# COPY ["package.json", "package-lock.json*", "/usr/src/app/"]
+COPY requirements.txt /app
 
-# RUN npm install
+RUN pip3 install -r requirements.txt
 
-# -----------------------------------------------------------------------------
-# Copy the remaining files taking advantage of the cache
-# -----------------------------------------------------------------------------
-COPY [".", "/usr/src/app/"]
+# Copy the entire project
 
-# -----------------------------------------------------------------------------
-# Exposed ports
-# -----------------------------------------------------------------------------
-EXPOSE 3000
+COPY . .
 
-# -----------------------------------------------------------------------------
-# Command to run deployed files
-# -----------------------------------------------------------------------------
-# CMD ["node", "dist/index.js"]
+WORKDIR /app/src
+# Ejecuted the project
+
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+
