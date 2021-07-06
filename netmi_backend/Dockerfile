@@ -11,7 +11,7 @@ WORKDIR /app
 
 # ENV variable for the flask program
 
-ENV FLASK_APP=./src/app.py
+ENV FLASK_APP=./src/main.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 # Copy the dependencies and install 
