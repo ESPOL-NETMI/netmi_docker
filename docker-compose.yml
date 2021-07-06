@@ -1,8 +1,8 @@
 version: "3.8"
 
 services:
-  netmi_backend:
-    container_name: netmi_backend
+  backend:
+    container_name: NetmiPython
     build:
       context: ../netmi_backend/
       dockerfile: ../netmi_docker/netmi_backend/Dockerfile
@@ -17,22 +17,22 @@ services:
       - ${PWD}/../netmi_backend/src:/app/src
     env_file:
       - ./.env
-    command: npm run start:dev
+    # command: npm run start:dev
 
-  netmi_frontend:
-    container_name: netmi_frontend
-    build:
-      context: ../netmi_frontend/
-      dockerfile: ../netmi_docker/netmi_frontend/Dockerfile
-    restart: always
-    networks:
-      - netmi_net
-    ports:
-      - "4200:80"
-    env_file:
-      - ./.env
-    depends_on:
-      - netmi_backend
+  # frontend:
+  #   container_name: netmi_frontend
+  #   build:
+  #     context: ../netmi_frontend/
+  #     dockerfile: ../netmi_docker/netmi_frontend/Dockerfile
+  #   restart: always
+  #   networks:
+  #     - netmi_net
+  #   ports:
+  #     - "4200:80"
+  #   env_file:
+  #     - ./.env
+  #   depends_on:
+  #     - netmi_backend
 
 networks:
   netmi_net:
