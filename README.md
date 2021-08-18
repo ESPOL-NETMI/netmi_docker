@@ -3,6 +3,7 @@
 ## **[Stage 1]** .- Cloning repositories
 
 **Step 1.- Go to environment dir**
+
 **Step 2.- Cloning all repositories**
 
 _Dockerfiles_
