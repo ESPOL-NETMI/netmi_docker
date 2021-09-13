@@ -16,11 +16,15 @@ ENV FLASK_RUN_HOST=0.0.0.0
 
 # Copy the dependencies and install 
 
-COPY requirements.txt /app
+COPY geniepyats.txt /app
+COPY microservice.txt /app
 
 # RUN npm install
-RUN pip3 install -r requirements.txt
-RUN pip3 install flask
+RUN pip install --upgrade pip
+RUN pip3 install --upgrade setuptools
+RUN pip3 install -r geniepyats.txt
+RUN pip3 install -r microservice.txt
+
 # Copy the entire project
 
 COPY . .
