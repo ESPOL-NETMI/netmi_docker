@@ -2,7 +2,7 @@
 ##### Backend for the migration  ###
 ####################################
 
-FROM python:3.8.11-slim-buster
+FROM python:3.6-slim-buster
 
 LABEL student1="macaagui@espol.edu.ec"
 LABEL student2="alealcor@espol.edu.ec"
@@ -16,13 +16,15 @@ ENV FLASK_RUN_HOST=0.0.0.0
 
 # Copy the dependencies and install 
 
-COPY geniepyats.txt /app
-COPY microservice.txt /app
+COPY *.txt /app
+# COPY microservice.txt /app
+# COPY requirements.txt /app
 
 # RUN npm install
 RUN pip install --upgrade pip
 RUN pip3 install --upgrade setuptools
-RUN pip3 install -r geniepyats.txt
+RUN pip3 install -r requirements.txt
+# RUN pip3 install -r geniepyats.txt
 RUN pip3 install -r microservice.txt
 
 # Copy the entire project
