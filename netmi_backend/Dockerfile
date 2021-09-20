@@ -42,10 +42,6 @@ VOLUME /etc/ssh
 
 WORKDIR /app
 
-# ENV variable for the flask program
-ENV FLASK_APP=./src/main.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
 # Copy the dependencies and install 
 
 COPY *.txt /app
@@ -63,6 +59,14 @@ RUN pip3 install -r microservice.txt
 
 COPY . .
 
+ENV variable for the flask program
+ENV FLASK_APP=/app/src/main
+ENV FLASK_RUN_HOST=0.0.0.0
+
+WORKDIR /app/src
+
 # Ejecuted the project
 #⚠ This command is comment because we are working in a dev stage
 CMD [ "flask", "run"]
+
+# CMD ["export", "FLASK_APP=main"]
