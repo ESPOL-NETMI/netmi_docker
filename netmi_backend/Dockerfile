@@ -42,31 +42,28 @@ VOLUME /etc/ssh
 
 WORKDIR /app
 
+# variable for the flask program
+ENV FLASK_APP=/app/src/app.py
+ENV FLASK_ENV=development
+ENV FLASK_RUN_HOST=0.0.0.0
+
 # Copy the dependencies and install 
 
 COPY *.txt /app
-# COPY microservice.txt /app
-# COPY requirements.txt /app
+
 
 # RUN npm install
 RUN pip install --upgrade pip
 RUN pip3 install --upgrade setuptools
 RUN pip3 install -r requirements.txt
-# RUN pip3 install -r geniepyats.txt
 RUN pip3 install -r microservice.txt
 
 # Copy the entire project
 
 COPY . .
 
-ENV variable for the flask program
-ENV FLASK_APP=/app/src/main
-ENV FLASK_RUN_HOST=0.0.0.0
-
-WORKDIR /app/src
+# WORKDIR /app/src
 
 # Ejecuted the project
 #⚠ This command is comment because we are working in a dev stage
 CMD [ "flask", "run"]
-
-# CMD ["export", "FLASK_APP=main"]

@@ -12,8 +12,8 @@ services:
     ports:
       - "5000:5000"
       - "2222:22"
-    # environment:
-    #   - ENVIRONMENT_MODE=development
+    environment:
+      - ENVIRONMENT_MODE=development
     volumes:
       - .:/app/src
     env_file:
