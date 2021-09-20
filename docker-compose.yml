@@ -11,10 +11,11 @@ services:
       - netmi_net
     ports:
       - "5000:5000"
+      - "2222:22"
     environment:
       - ENVIRONMENT_MODE=development
     volumes:
-      - ${PWD}/../netmi_backend/src:/app/src
+      - .:/app/src
     env_file:
       - ./.env
 
