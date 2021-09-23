@@ -11,13 +11,13 @@ WORKDIR /home/node/app
 
 # Copy the dependencies and install 
 
-COPY package*.json /home/node/app
+COPY package*.json /home/node/app/
 
 RUN npm install
 
 # Copy the entire project and build it
 
-COPY . /home/node/app
+COPY . /home/node/app/
 
 RUN npm run build
 

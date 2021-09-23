@@ -49,7 +49,7 @@ ENV FLASK_RUN_HOST=0.0.0.0
 
 # Copy the dependencies and install 
 
-COPY *.txt /app
+COPY *.txt /app/
 
 
 # RUN npm install
