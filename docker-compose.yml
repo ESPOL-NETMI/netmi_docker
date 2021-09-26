@@ -10,7 +10,7 @@ services:
     networks:
       - netmi_net
     ports:
-      - "5000:5000"
+      - "8080:8080"
       - "2222:22"
     environment:
       - ENVIRONMENT_MODE=development
